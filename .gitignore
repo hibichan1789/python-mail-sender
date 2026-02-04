@@ -1,0 +1,16 @@
+#Python
+__cache__
+*.py[cod]
+*$py.class
+.venv/
+.env
+
+#Docker
+.docker/
+
+#OS
+.DS_Store
+Thumbs.db
+
+#VScode
+.vscode/
