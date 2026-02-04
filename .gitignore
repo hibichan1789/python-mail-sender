@@ -12,6 +12,8 @@ __pycache__
 *.log
 logs/
 
+#attached data
+attach_data/
 
 #OS
 .DS_Store
