@@ -38,6 +38,7 @@ def main():
 
     #ここで定義した引数の解析をする
     args = parser.parse_args()
+    logger.info(f"{args.to}")
 
 if __name__ == "__main__":
     main()
