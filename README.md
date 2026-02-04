@@ -1,6 +1,7 @@
 # Gmail Sender CLI
 Python と Dockerを使ってコマンドラインからGmailを送信するツール  
 
+セキュリティの観点からgithub actionsの実装は行わず、ローカルでの実行のみとした
 
 
 # 以下のように.envファイルの作成をしてください
