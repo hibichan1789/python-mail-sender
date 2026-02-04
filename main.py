@@ -3,6 +3,9 @@ import logging
 from logging import FileHandler
 from datetime import date
 import os
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart#拡張用
 def main():
     log_dirname = "logs"
     os.makedirs(log_dirname, exist_ok=True)
@@ -16,7 +19,7 @@ def main():
         datefmt="[%X]",
         handlers=[FileHandler(filename=logfile_path)]
     )
-    logger = logging.getLogger()
+    logger = logging.getLogger(__name__)#__name__現在のモジュール名
     parser = ArgumentParser(description="Gmailを飛ばす用")
     parser.add_argument(
         "--to",
@@ -36,9 +39,29 @@ def main():
         default="Hello from Python"
     )
 
-    #ここで定義した引数の解析をする
+    logger.info("引数の解析を開始します")
     args = parser.parse_args()
-    logger.info(f"{args.to}")
+    logger.info("引数の解析が終了しました")
+
+    logger.info("環境変数の取得をします")
+    user = os.environ.get("GMAIL_USER")
+    password = os.environ.get("GMAIL_PASS")
+    if not user or not password:
+        logger.error("GMAIL_USER or GMAIL_PASS is not set in environment variables.")
+        return
+    msg = MIMEText(args.body)#本文
+    msg["Subject"] = args.subject
+    msg["From"] = user
+    msg["To"] = args.to
+
+    logger.info("メールを送信します")
+    try:
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+            server.login(user, password)
+            server.send_message(msg)
+        logger.info("メールの送信に成功")
+    except Exception as e:
+        logger.error(f"メールの送信に失敗しました: {e}")
 
 if __name__ == "__main__":
     main()
