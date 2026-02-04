@@ -9,20 +9,25 @@ GMAIL_USER=your-email@gmail.com
 GMAIL_PASS=xxxx-xxxx-xxxx-xxxx
 
 # ビルドと実行
-docker-compose build
-docker-compose run --rm app --to "recipient@example.com" --subject "テスト" --body "Dockerから送信！"
+docker compose build
+docker compose run --rm app --to "recipient@example.com" --subject "テスト" --body "Dockerから送信！"
 
 # ライブラリを追加した場合
-docker-compose buildをし直す
+docker compose buildをし直す
+
+# 今回のエラー修正
+DockerFileの最後がCMDだった
+ENTRYPOINTに変えると解決
+
+
 
 # 今回の勉強内容
 DockerfileのENTRYPOINT["python", "main.py"]は固定コマンドになる
 docker-compose run はdocker-compose.ymlを探す→build: . カレントディレクトリにあるDockerfileを使うということ
 run --rm　は一度実行した後に即座にコンテナが消える
-
 docker compose up -d --buildはAPIなどの常駐型
-
 .envは .gitignore, .dockerignoreに必ず入れる(情報が漏洩するから)
+logの導入logファイルは履歴が汚れるし、ログに個人情報が入っていた場合漏洩する可能性があるから.gitignoreに追加する
 
 # 今日勉強したコマンド、ショートカット
 ctrl + p ファイルを開けれる

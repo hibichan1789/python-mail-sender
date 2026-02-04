@@ -8,6 +8,11 @@ __pycache__
 #Docker
 .docker/
 
+#log
+*.log
+logs/
+
+
 #OS
 .DS_Store
 Thumbs.db
